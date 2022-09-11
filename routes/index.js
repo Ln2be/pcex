@@ -9,7 +9,7 @@ const basepathSaveDoc = isProduction
   ? "/var/www/docs/"
   : "/home/elhassen/Downloads/docs/";
 
-console.log(isProduction);
+let filefullname = "";
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, basepathSaveDoc);
@@ -18,7 +18,8 @@ const storage = multer.diskStorage({
     const uniqueSuffix = Date.now();
     console.log(file.fieldname, file.filename, file.originalname);
     //  + "-" + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + "-" + file.originalname);
+    filefullname = uniqueSuffix + "-" + file.originalname;
+    cb(null, filefullname);
   },
 });
 
@@ -36,7 +37,9 @@ router.get("/docs", async function (req, res, next) {
 });
 
 router.post("/save", upload.single("file"), async function (req, res, next) {
-  console.log(req.body);
+  const doc = req.body;
+  doc.file = filefullname;
+  await new models.DBDoc(doc).save();
   res.send("hello to pcex");
 });
 
