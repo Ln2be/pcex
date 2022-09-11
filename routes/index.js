@@ -40,6 +40,8 @@ router.get("/docs", async function (req, res, next) {
 router.post("/save", upload.single("file"), async function (req, res, next) {
   const doc = req.body;
   doc.file = filefullname;
+  const counter = await updateCounter("docs");
+  doc.count = counter;
   await new models.DBDoc(doc).save();
   res.send("hello to pcex");
 });
