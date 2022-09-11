@@ -9,6 +9,7 @@ const basepathSaveDoc = isProduction
   ? "/var/www/docs/"
   : "/home/elhassen/Downloads/docs/";
 
+console.log(isProduction);
 let filefullname = "";
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
