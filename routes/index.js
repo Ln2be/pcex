@@ -13,7 +13,7 @@ console.log(isProduction);
 let filefullname = "";
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, basepathSaveDoc);
+    cb(null, "/var/www/docs/");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
