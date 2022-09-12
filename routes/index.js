@@ -47,3 +47,15 @@ router.post("/save", upload.single("file"), async function (req, res, next) {
 });
 
 module.exports = router;
+
+async function updateCounter(nameCol) {
+  // add the counter
+  const pCounter =
+    (await models.DBCounter.findOne({ name: nameCol })) ||
+    (await new models.DBCounter({ name: nameCol }).save());
+  const counter = pCounter.counter + 1;
+
+  console.log(pCounter.counter, counter);
+  await models.DBCounter.updateOne({ name: nameCol }, { counter: counter });
+  return counter;
+}
