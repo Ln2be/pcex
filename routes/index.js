@@ -46,6 +46,17 @@ router.post("/save", upload.single("file"), async function (req, res, next) {
   res.send("hello to pcex");
 });
 
+router.get("/delete", async function (req, res, next) {
+  const count = req.query.count;
+  const docs = await models.DBDoc.deleteOne({ count: count });
+  res.send(docs);
+});
+
+router.get("/deleteall", async function (req, res, next) {
+  const docs = await models.DBDoc.deleteMany({});
+  res.send(docs);
+});
+
 module.exports = router;
 
 async function updateCounter(nameCol) {
